@@ -1,9 +1,6 @@
-using JetBrains.Annotations;
-using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public bool CanMove = true;
     public float moveX;
     public float moveY;
+    public Vector2 LastLookDir;
+    public bool ShouldCameraFollow = false;
 
     [Header("Camera")]
     [SerializeField] private cameraScript CameraScript;
@@ -44,6 +43,11 @@ public class PlayerMovement : MonoBehaviour
 
             moveDirection = new Vector2(moveX, moveY).normalized;
         }
+        
+        if (moveDirection.y != 0)
+        {
+            LastLookDir = moveDirection;
+        }
 
         if (rb != null && rb.velocity.magnitude > 4.5f)
         {
@@ -69,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
         }
+
         if (rb != null)
         {
             Vector2 targetVelocity = moveDirection * maxSpeed; // desired velocity based on input
@@ -99,20 +104,47 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.tag == "CameraSwitch")
         {
-            print("Collided");
             CameraScript.Switch();
-            StartCoroutine(DisableWalk());
+            StartCoroutine(ContinueWalk());
+        }
+        
+        if (collision.tag == "ShouldFollow")
+        {
+            ShouldCameraFollow = true;
+        }
+        if (collision.tag == "ShouldNotFollow")
+        {
+            ShouldCameraFollow = false;
         }
     }
 
-    IEnumerator DisableWalk()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        float duration = 1.5f;
+        if (collision.gameObject.tag == "ForestTile")
+        {
+            Destroy(collision.gameObject);
+        }
+    }
+
+    IEnumerator ContinueWalk()
+    {
+        float duration = 1f;
         float time = 0;
 
         while (time < duration)
         {
+
             CanMove = false;
+            Vector2 targetVelocity = LastLookDir * maxSpeed; // desired velocity based on input
+            Vector2 velocityReq = targetVelocity - rb.velocity; // how much we need to change the velocity
+
+            Vector2 moveforce = velocityReq * acceleration; //calculate the force needed to reach the target velocity considering acceleration
+
+            rb.AddForce(moveforce * Time.fixedDeltaTime, ForceMode2D.Force); //applyes the movement to the rb
+
+            acceleration = maxSpeed + 325 / 0.9f;
+
+
             time += Time.deltaTime;
             yield return null;
         }

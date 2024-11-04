@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - CameraSwitch
+  - ForestTile
+  - CameraFollow
+  - ShouldNotFollow
+  - ShouldFollow
   layers:
   - Default
   - TransparentFX
