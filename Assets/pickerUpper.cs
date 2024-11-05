@@ -10,6 +10,7 @@ public class pickerUpper : MonoBehaviour
         if (collision.tag == "Pickup")
         {
             Playerinventory.pearlsAmount++;
+            Destroy(collision.gameObject);
         }
     }
 }

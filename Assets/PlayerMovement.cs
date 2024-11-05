@@ -1,10 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -42,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public inventory Inventory;
 
     private GameObject[] allItems;
+    public TextMeshProUGUI myText;
 
     void Start()
     {
@@ -96,12 +94,11 @@ public class PlayerMovement : MonoBehaviour
                     pickupscript.Dettach();
             }
         }
-
-
-
     }
     private void FixedUpdate()
     {
+        myText.text = "Pearls: "+ Inventory.pearlsAmount.ToString();
+
         if (rb != null && rb.velocity.magnitude < 0.01f && !CanMove)
         {
             rb.velocity = Vector2.zero;
