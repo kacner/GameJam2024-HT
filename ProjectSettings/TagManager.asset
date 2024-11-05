@@ -9,6 +9,7 @@ TagManager:
   - CameraFollow
   - ShouldNotFollow
   - ShouldFollow
+  - Pickup
   layers:
   - Default
   - TransparentFX

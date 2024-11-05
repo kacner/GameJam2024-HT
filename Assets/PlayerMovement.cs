@@ -1,7 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEditor.Progress;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -36,6 +39,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 startPosition;
     private Vector2 direction;
     public LayerMask targetLayerMask;
+    public inventory Inventory;
+
+    private GameObject[] allItems;
 
     void Start()
     {
@@ -79,6 +85,20 @@ public class PlayerMovement : MonoBehaviour
             Debug.Break();
 
         Mine();
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            allItems = GameObject.FindGameObjectsWithTag("Pickup");
+            foreach (GameObject item in allItems)
+            {
+               Pickup pickupscript = item.GetComponent<Pickup>();
+                if (pickupscript != null)
+                    pickupscript.Dettach();
+            }
+        }
+
+
+
     }
     private void FixedUpdate()
     {

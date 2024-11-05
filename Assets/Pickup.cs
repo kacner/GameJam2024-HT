@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class Pickup : MonoBehaviour
     private bool isAttached = false;
     private DistanceJoint2D distanceJoint;
     private LineRenderer linerenderer;
+    private float cooldown = -0.1f;
     void Start()
     {
         linerenderer = GetComponent<LineRenderer>();
@@ -21,7 +23,7 @@ public class Pickup : MonoBehaviour
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-        if (distanceToPlayer < 2.5f && !isAttached)
+        if (distanceToPlayer < 2.5f && !isAttached && cooldown < 0)
         {
             Attach();
         }
@@ -32,13 +34,45 @@ public class Pickup : MonoBehaviour
             linerenderer.SetPosition(0, transform.position); // Current object position
             linerenderer.SetPosition(1, player.transform.position); // Player position
         }
+
+        if (cooldown > -1)
+        {
+            cooldown -= Time.fixedDeltaTime;
+        }
     }
 
     private void Attach()
     {
         isAttached = true;
+        linerenderer.enabled = true;
+
+        if (distanceJoint == null)
         distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
+
         distanceJoint.connectedBody = player.GetComponent<PlayerMovement>().rb;
         linerenderer.positionCount = 2;
+    }
+
+    public void Dettach()
+    {
+        isAttached = false;
+        if (distanceJoint == null)
+        {
+            distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
+            distanceJoint.connectedBody = null;
+        }
+        else
+        {
+            distanceJoint.connectedBody = null;
+        }
+        if (linerenderer != null)
+        linerenderer.enabled = false;
+        else
+        {
+            linerenderer = GetComponent<LineRenderer>();
+            linerenderer.enabled = false;
+        }
+
+        cooldown = 2f;
     }
 }
