@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8994616182347557137}
   - component: {fileID: 4347045962452712153}
   m_Layer: 3
-  m_Name: Trees
+  m_Name: DroppedItem
   m_TagString: ForestTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,4 +125,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 3
-  droppedItem: {fileID: 8798590181341469091, guid: 6ed7bff6cc510924cb9b8bf6e01bc511, type: 3}

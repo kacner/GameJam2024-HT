@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ForestTile : MonoBehaviour
 {
     [SerializeField] private int Health = 3;
+    [SerializeField] private GameObject droppedItem; 
 
     public void TakeDMG(int damange)
     {
@@ -20,6 +22,9 @@ public class ForestTile : MonoBehaviour
 
     void die()
     {
-        Destroy(gameObject);
+       GameObject DroppedItem = Instantiate(droppedItem, transform.position, Quaternion.identity);
+        //DroppedItem.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        Destroy(this.gameObject);
+        
     }
 }
