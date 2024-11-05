@@ -32,15 +32,14 @@ public class cameraScript : MonoBehaviour
 
     IEnumerator SwitchTo(Transform MoveToTransform)
     {
-        float duration = 10f;
+        float duration = 1f;
         float time = 0f;
         
         while (time < duration)
         {
             transform.position = Vector3.Lerp(transform.position, MoveToTransform.position, time / duration);
             time += Time.fixedDeltaTime;
-            print(time);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         transform.position = MoveToTransform.position;

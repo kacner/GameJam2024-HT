@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,6 +26,16 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Particle Systems")]
     public ParticleSystem runningParticleSystem;
+
+    [Space(10)]
+
+    [Header("Mining")]
+    [SerializeField] private int MiningDamage = 1;
+    public float rayLength = 10f;
+    private Vector2 mousePosition;
+    private Vector2 startPosition;
+    private Vector2 direction;
+    public LayerMask targetLayerMask;
 
     void Start()
     {
@@ -66,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.N))
             Debug.Break();
+
+        Mine();
     }
     private void FixedUpdate()
     {
@@ -118,14 +131,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "ForestTile")
-        {
-            Destroy(collision.gameObject);
-        }
-    }
-
     IEnumerator ContinueWalk()
     {
         float duration = 1f;
@@ -149,5 +154,50 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         CanMove = true;
+    }
+
+    void Mine()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            startPosition = transform.position;
+
+            direction = (mousePosition - startPosition).normalized;
+
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, direction, rayLength, targetLayerMask);
+
+            if (hit.collider != null && hit.collider.CompareTag("ForestTile"))
+            {
+                hit.collider.gameObject.GetComponent<ForestTile>().TakeDMG(MiningDamage);
+            }
+
+
+            if (hit.collider != null)
+            {
+                Debug.Log("Hit detected: " + hit.collider.gameObject.name);
+
+                if (hit.collider.CompareTag("ForestTile"))
+                {
+                    Debug.Log("ForestTile hit detected");
+                    hit.collider.gameObject.GetComponent<ForestTile>().TakeDMG(MiningDamage);
+                }
+            }
+            else
+            {
+                Debug.Log("No hit detected");
+            }
+        }
+
+        
+    }
+    void OnDrawGizmos()
+    {
+        if (direction != Vector2.zero)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(startPosition, startPosition + direction * rayLength);
+        }
     }
 }
