@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Pickup : MonoBehaviour
@@ -10,6 +6,7 @@ public class Pickup : MonoBehaviour
     private GameObject player;
     private bool isAttached = false;
     private DistanceJoint2D distanceJoint;
+    private WheelJoint2D wheelJoint;
     private LineRenderer linerenderer;
     private float cooldown = -0.1f;
     void Start()
