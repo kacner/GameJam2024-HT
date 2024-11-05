@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 2641184652405994275}
   - component: {fileID: 1648696043007755324}
   - component: {fileID: 8994616182347557137}
-  - component: {fileID: 4347045962452712153}
-  m_Layer: 3
-  m_Name: Trees
-  m_TagString: ForestTile
+  m_Layer: 0
+  m_Name: LastRowPrefab
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 0fee3fe80a529fd45b88ac388a8d7751, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -112,17 +111,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4347045962452712153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357561041134406186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85c569f2137f936479277aeef22619fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 3
-  droppedItem: {fileID: 8798590181341469091, guid: 6ed7bff6cc510924cb9b8bf6e01bc511, type: 3}

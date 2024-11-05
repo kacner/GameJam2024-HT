@@ -6,11 +6,12 @@ public class ForestSpawner : MonoBehaviour
     public int rows = 5;
     public int columns = 5;
     public float cellSize = 1f;
+    public float rowOverlap = 0.2f;
 
     [Header("Sprites")]
     public Sprite[] ForestTiles;
     public GameObject Prefab;
-    
+    public GameObject lastRowPrefab;
 
     void Start()
     {
@@ -19,9 +20,9 @@ public class ForestSpawner : MonoBehaviour
 
     void SpawnGrid()
     {
-        if (ForestTiles == null)
+        if (ForestTiles == null || Prefab == null || lastRowPrefab == null)
         {
-            Debug.LogError("No square prefab assigned!");
+            Debug.LogError("Prefabs or ForestTiles are not assigned!");
             return;
         }
 
@@ -31,13 +32,17 @@ public class ForestSpawner : MonoBehaviour
         {
             for (int col = 0; col < columns; col++)
             {
-                Vector2 spawnPosition = startPosition + new Vector2(col * cellSize, row * cellSize);
+                // Calculate spawn position with row overlap
+                Vector2 spawnPosition = startPosition + new Vector2(col * cellSize, row * cellSize - row * rowOverlap);
 
-                int SpawnType = Random.Range(0, ForestTiles.Length);
+                int spawnType = Random.Range(0, ForestTiles.Length);
 
-                GameObject square = Instantiate(Prefab, spawnPosition, Quaternion.identity, transform);
+                // Use firstRowPrefab for the first row, otherwise use the default Prefab
+                GameObject prefabToUse = (row == 0) ? lastRowPrefab : Prefab;
+
+                GameObject square = Instantiate(prefabToUse, spawnPosition, Quaternion.identity, transform);
                 square.transform.localScale = Vector3.one * cellSize;
-                square.GetComponent<SpriteRenderer>().sprite = ForestTiles[SpawnType];
+                square.GetComponent<SpriteRenderer>().sprite = ForestTiles[spawnType];
             }
         }
     }

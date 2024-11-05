@@ -193,17 +193,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Debug.Log("Hit detected: " + hit.collider.gameObject.name);
 
                 if (hit.collider.CompareTag("ForestTile"))
                 {
-                    Debug.Log("ForestTile hit detected");
                     hit.collider.gameObject.GetComponent<ForestTile>().TakeDMG(MiningDamage);
                 }
-            }
-            else
-            {
-                Debug.Log("No hit detected");
             }
         }
 

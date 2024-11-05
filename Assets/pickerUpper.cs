@@ -20,36 +20,22 @@ public class pickerUpper : MonoBehaviour
         item.GetComponent<BoxCollider2D>().enabled = false;
         float time = 0;
         float duration = 2f;
-
-        while (time < duration)
-        {
-            item.transform.position = Vector2.Lerp(item.transform.position, transform.position, time / duration);
-
-            time += Time.fixedDeltaTime;
-            yield return null;
-        }
-
-        item.transform.position = transform.position;
-        StartCoroutine(FadeToblack(item));
-    }
-    IEnumerator FadeToblack(GameObject item)
-    {
-        float time = 0f;
-        float duration = 0.5f;
-
         SpriteRenderer sprieenderer = item.GetComponent<SpriteRenderer>();
 
         while (time < duration)
         {
             sprieenderer.color = Color.Lerp(item.GetComponent<SpriteRenderer>().color, color, time / duration);
 
+            item.transform.position = Vector2.Lerp(item.transform.position, transform.position, time / duration);
+
+            item.transform.localScale = Vector3.Lerp(item.transform.localScale, new Vector3(0.3f, 0.3f, 0.3f), time / duration);
 
             time += Time.fixedDeltaTime;
             yield return null;
         }
-        
+
+        item.transform.position = transform.position;
         item.GetComponent<SpriteRenderer>().color = color;
-        
-        //Destroy(item.gameObject);
+        Destroy(item.gameObject);
     }
 }
