@@ -9,6 +9,7 @@ TagManager:
   - CameraFollow
   - ShouldNotFollow
   - ShouldFollow
+  - Block
   layers:
   - Default
   - TransparentFX
