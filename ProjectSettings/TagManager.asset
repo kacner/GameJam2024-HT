@@ -10,6 +10,7 @@ TagManager:
   - ShouldNotFollow
   - ShouldFollow
   - Pickup
+  - Block
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - ForestTile
   - Water
   - UI
-  - 
+  -
   - 
   - 
   - 
