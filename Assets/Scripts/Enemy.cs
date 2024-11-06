@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public GameObject Wall;
-    public float speed = 1;
+    public float speed = 3;
     public GameObject projectilePrefab;
     public Transform Player;
     public Transform firePoint;
@@ -24,8 +24,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        float randomDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1f : 1f;
-        movement = new Vector2(randomDirection, 0).normalized;
+        float direction = UnityEngine.Random.Range(0, 2) == 0 ? -5f : 5f;
+        movement = new Vector2(direction, 0).normalized;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
         Vector2 direction = (Wall.transform.position - transform.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        if (distance > distanceToStop)
+        if (distance < distanceToStop)
         {
             transform.position = Vector2.MoveTowards(this.transform.position, Wall.transform.position, speed * Time.deltaTime);
             Vector2 direction34 = (Wall.transform.position - transform.position).normalized;
@@ -54,8 +54,8 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            //rb.velocity = Vector2.zero;
-            //Debug.Log("stop");
+            rb.velocity = Vector2.zero;
+            Debug.Log("stop");
 
             timeLeft -= Time.deltaTime;
             if (timeLeft <= 0)
@@ -78,8 +78,8 @@ public class Enemy : MonoBehaviour
 
     void ChangeDirection()
     {
-        float randomX = UnityEngine.Random.Range(-1f, 1f);
-        float randomY = UnityEngine.Random.Range(-1f, 1f);
+        float randomX = UnityEngine.Random.Range(-5f, 5f);
+        float randomY = UnityEngine.Random.Range(-5f, 5f);
 
         movement = new Vector2(randomX, randomY).normalized;
     }
@@ -123,6 +123,6 @@ public class Enemy : MonoBehaviour
             rb.velocity = transform.right * projectileSpeed;
             rb.angularVelocity = 0;
             cooldownTimer = shootingcooldown;
-        }
+        } 
     }
 }
