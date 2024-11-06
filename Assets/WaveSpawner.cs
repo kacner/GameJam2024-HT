@@ -51,7 +51,7 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(TimeBetweenWaves);
             IsWaveOnCooldown = false;
             StartCoroutine(spawnWave());
-            CurrentWaveIntensity++;
+            waveIntensity++;
 
         }
     }

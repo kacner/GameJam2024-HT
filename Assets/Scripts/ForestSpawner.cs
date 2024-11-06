@@ -9,8 +9,7 @@ public class ForestSpawner : MonoBehaviour
     public float rowOverlap = 0.2f;
 
     [Header("Sprites")]
-    public Sprite[] ForestTiles;
-    public GameObject Prefab;
+    public GameObject[] ForestTiles;
     public GameObject lastRowPrefab;
 
     void Start()
@@ -20,7 +19,7 @@ public class ForestSpawner : MonoBehaviour
 
     void SpawnGrid()
     {
-        if (ForestTiles == null || Prefab == null || lastRowPrefab == null)
+        if (ForestTiles == null || lastRowPrefab == null)
         {
             Debug.LogError("Prefabs or ForestTiles are not assigned!");
             return;
@@ -30,6 +29,8 @@ public class ForestSpawner : MonoBehaviour
 
         for (int row = 0; row < rows; row++)
         {
+            int orderInLayer = -5 - row;  // Calculate order in layer for the current row
+
             for (int col = 0; col < columns; col++)
             {
                 // Calculate spawn position with row overlap
@@ -37,12 +38,14 @@ public class ForestSpawner : MonoBehaviour
 
                 int spawnType = Random.Range(0, ForestTiles.Length);
 
-                // Use firstRowPrefab for the first row, otherwise use the default Prefab
-                GameObject prefabToUse = (row == 0) ? lastRowPrefab : Prefab;
+                // Use lastRowPrefab for the first row, otherwise use the default Prefab
+                GameObject prefabToUse = (row == 0) ? lastRowPrefab : ForestTiles[spawnType];
 
                 GameObject square = Instantiate(prefabToUse, spawnPosition, Quaternion.identity, transform);
                 square.transform.localScale = Vector3.one * cellSize;
-                square.GetComponent<SpriteRenderer>().sprite = ForestTiles[spawnType];
+
+                // Set order in layer for the SpriteRenderer
+                square.GetComponent<SpriteRenderer>().sortingOrder = orderInLayer;
             }
         }
     }

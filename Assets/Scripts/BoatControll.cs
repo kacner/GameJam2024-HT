@@ -19,9 +19,19 @@ public class BoatControll : MonoBehaviour
     public bool isActive = false;
     public ParticleSystem gunparticle;
     public float holdtimer = 0;
-    public float bowHoldTime = 2;
+    private float bowHoldTime = 3f;
     public cameraScript CameraScript;
-    
+    public SpriteRenderer harpoon;
+    public SpriteRenderer harpoonSprite;
+    private Animator animator;
+    private void Start()
+    {
+        harpoon.enabled = false;
+        animator = firePoint.GetComponent<Animator>();
+        harpoonSprite.enabled = true;
+        animator.SetBool("drawing", false);
+    }
+
     void Update()
     {
         if (isActive)
@@ -32,17 +42,20 @@ public class BoatControll : MonoBehaviour
             }
 
             AimTurret();
-
+            
             print(CurrentCooldown);
 
             if (Input.GetKey(KeyCode.Mouse1)) // Shooting starts
             {
                 holdtimer += Time.fixedDeltaTime;
                 holdtimer = Mathf.Clamp(holdtimer, 0, bowHoldTime);
+                harpoon.enabled = true;
+                harpoonSprite.enabled = false;
+                animator.SetBool("drawing", true);
             }
             else // Mouse1 button is not held
             {
-                if (holdtimer > 1.8f)
+                if (holdtimer > (bowHoldTime - 0.2f))
                 {
                     CameraScript.StartShake();
                     gunparticle.Play();
@@ -50,10 +63,16 @@ public class BoatControll : MonoBehaviour
                     Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
                     rb.velocity = firePoint.right * projectileSpeed;
                     holdtimer = 0;
+                    harpoon.enabled = false;
+                    animator.SetBool("drawing", false);
+                    harpoonSprite.enabled = true;
                 }
                 else
                 {
                     holdtimer = 0;
+                    harpoon.enabled = false;
+                    animator.SetBool("drawing", false);
+                    harpoonSprite.enabled = true;
                 }
             }
         }

@@ -116,20 +116,6 @@ public class PlayerMovement : MonoBehaviour
             acceleration = maxSpeed + 325 / 0.9f;
         }
     }
-    private void UpdateHorVer()
-    {
-        if (moveDirection != Vector2.zero) //if player isnt moving
-        {
-                animator.SetFloat("Horizontal", moveX);
-                animator.SetFloat("Vertical", moveY);
-        }
-        else if (moveDirection != Vector2.zero)
-        {
-            animator.SetFloat("Horizontal", moveX);
-            animator.SetFloat("Vertical", moveY);
-        
-        }
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "CameraSwitch")
@@ -175,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Mine()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 

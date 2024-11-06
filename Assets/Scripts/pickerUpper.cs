@@ -1,10 +1,12 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class pickerUpper : MonoBehaviour
 {
     public inventory Playerinventory;
     public Color color;
+    public ParticleSystem[] partisstclesys;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Pickup")
@@ -17,7 +19,7 @@ public class pickerUpper : MonoBehaviour
 
     IEnumerator Thing(GameObject item)
     {
-        item.GetComponent<BoxCollider2D>().enabled = false;
+        item.GetComponent<CircleCollider2D>().enabled = false;
         float time = 0;
         float duration = 2f;
         SpriteRenderer sprieenderer = item.GetComponent<SpriteRenderer>();
@@ -37,5 +39,15 @@ public class pickerUpper : MonoBehaviour
         item.transform.position = transform.position;
         item.GetComponent<SpriteRenderer>().color = color;
         Destroy(item.gameObject);
+
+        StartParticle();
+    }
+
+    void StartParticle()
+    {
+        foreach (ParticleSystem item in partisstclesys)
+        {
+            item.Play();
+        }
     }
 }
