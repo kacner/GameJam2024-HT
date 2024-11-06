@@ -1,10 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Net.Security;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class ActivateTurret : MonoBehaviour
 {
@@ -14,10 +9,14 @@ public class ActivateTurret : MonoBehaviour
     [SerializeField] private bool active = false;
     public cameraScript CameraScript;
     public GameObject interactDisplay;
-
+    [SerializeField] private Color color;
+    private Color startColor;
+    [SerializeField] private SpriteRenderer SubBackground;
+    [SerializeField] private SpriteRenderer SubForeground;
     private void Start()
     {
         interactDisplay.SetActive(false);
+        startColor = SubForeground.color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,9 +37,14 @@ public class ActivateTurret : MonoBehaviour
     private void Update()
     {
         if (colliding)
+        {
             interactDisplay.SetActive(true);
+            StartCoroutine(FadeOut());
+        }
         else
+        {
             interactDisplay.SetActive(false);
+        }
 
 
         if (Input.GetKeyDown(KeyCode.E) && colliding && !active)
@@ -103,5 +107,22 @@ public class ActivateTurret : MonoBehaviour
         }
 
         interactDisplay.transform.localScale = originalScale;
+    }
+
+    IEnumerator FadeOut()
+    {
+        float time = 0;
+        float duration = 1;
+
+
+        while (time < duration)
+        {
+            SubForeground.color = Color.Lerp(SubForeground.color, color, time / duration);
+
+            time += Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        SubForeground.color = color;
     }
 }

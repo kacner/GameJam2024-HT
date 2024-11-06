@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
@@ -51,7 +49,7 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(TimeBetweenWaves);
             IsWaveOnCooldown = false;
             StartCoroutine(spawnWave());
-            CurrentWaveIntensity++;
+            waveIntensity++;
 
         }
     }
