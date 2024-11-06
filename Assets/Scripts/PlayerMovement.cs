@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -41,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshProUGUI myText;
 
     public ParticleSystem[] breathingParticles;
+
+    public AudioSource breathingsorurce;
 
     void Start()
     {
@@ -205,11 +208,15 @@ public class PlayerMovement : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(3f);
             foreach (ParticleSystem item in breathingParticles)
             {
                 item.Play();
             }
+            yield return new WaitForSeconds(1f);
+            breathingsorurce.pitch += Random.RandomRange(-0.25f, 0.25f);
+            breathingsorurce.Play();
+            breathingsorurce.pitch = 1;
         }
     }
 }

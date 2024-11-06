@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoatControll : MonoBehaviour
@@ -22,12 +23,18 @@ public class BoatControll : MonoBehaviour
     private Animator animator;
     public ShadowTrigger shadowtrigger;
     public ParticleSystem[] particlesysytemss;
+
+    public GameObject AudioSorceHaver;
+
+    private AudioSource[] HarpoonShoot;
     private void Start()
     {
         harpoon.enabled = false;
         animator = firePoint.GetComponent<Animator>();
         harpoonSprite.enabled = true;
         animator.SetBool("drawing", false);
+
+        HarpoonShoot = AudioSorceHaver.GetComponents<AudioSource>();
     }
 
     void Update()
@@ -90,6 +97,10 @@ public class BoatControll : MonoBehaviour
 
     void shoot()
     {
+        foreach (AudioSource item in HarpoonShoot)
+        {
+            item.Play();
+        }
         shadowtrigger.forceDisable();
         CameraScript.StartShake();
         gunparticle.Play();
