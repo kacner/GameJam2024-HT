@@ -40,11 +40,14 @@ public class PlayerMovement : MonoBehaviour
     private GameObject[] allItems;
     public TextMeshProUGUI myText;
 
+    public ParticleSystem[] breathingParticles;
+
     void Start()
     {
         spriterenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        StartCoroutine(Breathing());
     }
 
 
@@ -194,6 +197,19 @@ public class PlayerMovement : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(startPosition, startPosition + direction * rayLength);
+        }
+    }
+
+
+    IEnumerator Breathing()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(4f);
+            foreach (ParticleSystem item in breathingParticles)
+            {
+                item.Play();
+            }
         }
     }
 }

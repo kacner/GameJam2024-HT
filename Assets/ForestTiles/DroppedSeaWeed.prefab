@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 295511558205447700}
   - component: {fileID: 345461094809165153}
   - component: {fileID: 631704905866833920}
+  - component: {fileID: 9159486156315836553}
   m_Layer: 0
   m_Name: DroppedSeaWeed
   m_TagString: Pickup
@@ -237,3 +238,37 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.0025110245}
   serializedVersion: 2
   m_Radius: 0.38078594
+--- !u!114 &9159486156315836553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8798590181341469091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.36136198, y: -0.06293869, z: 0}
+  - {x: -0.32934666, y: 0.13824081, z: 0}
+  - {x: -0.14283133, y: 0.33081436, z: 0}
+  - {x: 0.06763792, y: 0.3590126, z: 0}
+  - {x: 0.25810623, y: 0.2674694, z: 0}
+  - {x: 0.36384702, y: 0.07008743, z: 0}
+  - {x: 0.3685465, y: -0.15549278, z: 0}
+  - {x: 0.25092196, y: -0.2838192, z: 0}
+  - {x: 0.117115974, y: -0.34582138, z: 0}
+  - {x: -0.10611439, y: -0.35286903, z: 0}
+  - {x: -0.19305706, y: -0.28237534, z: 0}
+  m_ShapePathHash: -894943641
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -199266

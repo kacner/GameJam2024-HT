@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 
 public class cameraScript : MonoBehaviour
@@ -18,6 +19,8 @@ public class cameraScript : MonoBehaviour
     public AnimationCurve animationcurve;
     float shakeDuration = 0.5f;
 
+    public Light2D PlayerLight;
+
     void Start()
     {
         transform.position = MainPOV.position;
@@ -29,11 +32,13 @@ public class cameraScript : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(SwitchTo(MainPOV));
             isMainPov = true;
+            StartCoroutine(changelight(0.5f));
         }
         else if (isMainPov)
         {
             StopAllCoroutines();
             StartCoroutine(SwitchTo(ForestPOV));
+            StartCoroutine(changelight(1.2f));
             isMainPov = false;
         }
     }
@@ -94,5 +99,22 @@ public class cameraScript : MonoBehaviour
     public void StartShake()
     {
         StartCoroutine(Shake());
+    }
+
+    IEnumerator changelight(float intensity)
+    {
+        float timer = 0;
+        float duration = 3;
+
+        while (timer < duration)
+        {
+            PlayerLight.intensity = Mathf.Lerp(PlayerLight.intensity, intensity, timer / duration);
+
+            timer += Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        PlayerLight.intensity = intensity;
+
     }
 }

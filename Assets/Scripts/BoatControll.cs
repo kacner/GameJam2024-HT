@@ -15,11 +15,13 @@ public class BoatControll : MonoBehaviour
     public bool isActive = false;
     public ParticleSystem gunparticle;
     public float holdtimer = 0;
-    private float bowHoldTime = 3f;
+    private float bowHoldTime = 1.5f;
     public cameraScript CameraScript;
     public SpriteRenderer harpoon;
     public SpriteRenderer harpoonSprite;
     private Animator animator;
+    public ShadowTrigger shadowtrigger;
+    public ParticleSystem[] particlesysytemss;
     private void Start()
     {
         harpoon.enabled = false;
@@ -53,15 +55,8 @@ public class BoatControll : MonoBehaviour
             {
                 if (holdtimer > (bowHoldTime - 0.2f))
                 {
-                    CameraScript.StartShake();
-                    gunparticle.Play();
-                    GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation * Quaternion.Euler(0, 0, -90));
-                    Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-                    rb.velocity = firePoint.right * projectileSpeed;
-                    holdtimer = 0;
-                    harpoon.enabled = false;
-                    animator.SetBool("drawing", false);
-                    harpoonSprite.enabled = true;
+                    shoot();
+                    
                 }
                 else
                 {
@@ -76,6 +71,7 @@ public class BoatControll : MonoBehaviour
 
     void AimTurret()
     {
+        shadowtrigger.forceDisable();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
@@ -90,5 +86,23 @@ public class BoatControll : MonoBehaviour
         float smoothAngle = Mathf.LerpAngle(currentAngle, targetAngle, Time.deltaTime * rotationSpeed);
 
         turret.localRotation = Quaternion.Euler(0, 0, smoothAngle);
+    }
+
+    void shoot()
+    {
+        shadowtrigger.forceDisable();
+        CameraScript.StartShake();
+        gunparticle.Play();
+        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation * Quaternion.Euler(0, 0, -90));
+        foreach (ParticleSystem item in particlesysytemss)
+        {
+            item.Play();
+        }
+        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+        rb.velocity = firePoint.right * projectileSpeed;
+        holdtimer = 0;
+        harpoon.enabled = false;
+        animator.SetBool("drawing", false);
+        harpoonSprite.enabled = true;
     }
 }
