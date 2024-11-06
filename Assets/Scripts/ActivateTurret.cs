@@ -1,10 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Net.Security;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class ActivateTurret : MonoBehaviour
 {
@@ -129,21 +124,5 @@ public class ActivateTurret : MonoBehaviour
         }
 
         SubForeground.color = color;
-    }
-    IEnumerator FadeIn()
-    {
-        float time = 0;
-        float duration = 1;
-
-
-        while (time < duration)
-        {
-            SubForeground.color = Color.Lerp(color, startColor, time / duration);
-
-            time += Time.fixedDeltaTime;
-            yield return null;
-        }
-
-        color = startColor;
     }
 }

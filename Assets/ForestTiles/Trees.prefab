@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8994616182347557137}
   - component: {fileID: 4347045962452712153}
   - component: {fileID: 7398553882067160914}
+  - component: {fileID: 7423183850878741801}
   m_Layer: 3
   m_Name: Trees
   m_TagString: ForestTile
@@ -129,6 +130,7 @@ MonoBehaviour:
   MaxHealth: 3
   CurrentHealth: 3
   droppedItem: {fileID: 0}
+  damageCooldown: 0.7
   breakingSprites:
   - {fileID: 21300000, guid: 3ea1dfedd758dca4b8675dc434aa4564, type: 3}
   - {fileID: 21300000, guid: 670bf270e14ed244a89c1fba66a1c865, type: 3}
@@ -184,6 +186,33 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7423183850878741801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357561041134406186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -864974
 --- !u!1 &5424507326466673445
 GameObject:
   m_ObjectHideFlags: 0

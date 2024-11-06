@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class pickerUpper : MonoBehaviour
@@ -14,6 +13,7 @@ public class pickerUpper : MonoBehaviour
             Playerinventory.pearlsAmount++;
             StartCoroutine(Thing(collision.gameObject));
             collision.GetComponent<Pickup>().Dettach();
+            collision.GetComponent<SpriteRenderer>().sortingOrder = 12;
         }
     }
 
