@@ -28,6 +28,8 @@ public class EnemyHp : MonoBehaviour
 
     public WaveSpawner wavespawner;
 
+    [SerializeField] private float Damage = 1;
+
     void Start()
     {
         protectedObjects = new Transform[transform.childCount];
@@ -202,5 +204,14 @@ public class EnemyHp : MonoBehaviour
         BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
         if (boxCollider != null)
             boxCollider.enabled = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Sub")
+        {
+            collision.GetComponent<SubHP>().TakeDamage(Damage);
+            rb.AddForce(transform.up * 15, ForceMode2D.Impulse);
+        }
     }
 }

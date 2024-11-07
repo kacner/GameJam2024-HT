@@ -10,7 +10,7 @@ public class pickerUpper : MonoBehaviour
     {
         if (collision.tag == "Pickup")
         {
-            Playerinventory.pearlsAmount++;
+            CalculateMoney(collision.gameObject);
             StartCoroutine(Thing(collision.gameObject));
             collision.GetComponent<Pickup>().Dettach();
             collision.GetComponent<SpriteRenderer>().sortingOrder = 12;
@@ -32,7 +32,7 @@ public class pickerUpper : MonoBehaviour
 
             item.transform.localScale = Vector3.Lerp(item.transform.localScale, new Vector3(0.3f, 0.3f, 0.3f), time / duration);
 
-            time += Time.fixedDeltaTime;
+            time += Time.deltaTime;
             yield return null;
         }
 
@@ -49,5 +49,10 @@ public class pickerUpper : MonoBehaviour
         {
             item.Play();
         }
+    }
+
+    void CalculateMoney(GameObject thing)
+    {
+        Playerinventory.Money += 5;
     }
 }

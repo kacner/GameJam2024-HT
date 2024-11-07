@@ -52,7 +52,7 @@ public class BoatControll : MonoBehaviour
 
             if (Input.GetKey(KeyCode.Mouse1)) // Shooting starts
             {
-                holdtimer += Time.fixedDeltaTime;
+                holdtimer += Time.deltaTime;
                 holdtimer = Mathf.Clamp(holdtimer, 0, bowHoldTime);
                 harpoon.enabled = true;
                 harpoonSprite.enabled = false;
@@ -99,6 +99,7 @@ public class BoatControll : MonoBehaviour
     {
         foreach (AudioSource item in HarpoonShoot)
         {
+            item.pitch = 1 + Random.RandomRange(-0.25f, 0.25f);
             item.Play();
         }
         shadowtrigger.forceDisable();
@@ -114,6 +115,7 @@ public class BoatControll : MonoBehaviour
         holdtimer = 0;
         harpoon.enabled = false;
         animator.SetBool("drawing", false);
+
         harpoonSprite.enabled = true;
     }
 }

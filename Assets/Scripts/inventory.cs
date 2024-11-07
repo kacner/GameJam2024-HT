@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class inventory : MonoBehaviour
 {
-    public int pearlsAmount = 0;
+    public int Money = 0;
 }
