@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class WaveSpawner : MonoBehaviour
 
     [SerializeField] private GameObject[] spawnpoints;
     [SerializeField] public List<GameObject> allSpawnedEnemyes;
+
+    public TextMeshProUGUI EnemyesLeft;
     // Update is called once per frame
     void Update()
     {
@@ -34,6 +37,16 @@ public class WaveSpawner : MonoBehaviour
 
         if (allSpawnedEnemyes.Count == 0)
             IsWaveActive = false;
+
+        if (IsWaveActive)
+        {
+            EnemyesLeft.enabled = true;
+            EnemyesLeft.text = "Enemies left: " + allSpawnedEnemyes.Count.ToString();
+        }
+        else
+        {
+            EnemyesLeft.enabled = false;
+        }
     }
 
     IEnumerator StartWaveSpawning()
@@ -45,10 +58,10 @@ public class WaveSpawner : MonoBehaviour
                 yield return null;
             }
 
+            StartCoroutine(spawnWave());
             IsWaveOnCooldown = true;
             yield return new WaitForSeconds(TimeBetweenWaves);
             IsWaveOnCooldown = false;
-            StartCoroutine(spawnWave());
             waveIntensity++;
 
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -45,17 +46,27 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioSource breathingsorurce;
 
+    public GameObject inventoryPanel;
+    public bool isInventoryOpen = false;
+
+    public UppgradeManager Uppgrademanager;
+
     void Start()
     {
         spriterenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         StartCoroutine(Breathing());
+
+        inventoryPanel.SetActive(false);
     }
 
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+            SwitchInventory();
+
         if (CanMove)
         {
             moveX = Input.GetAxisRaw("Horizontal"); //value -1 or 1. left or right
@@ -102,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        myText.text = "Pearls: "+ Inventory.pearlsAmount.ToString();
+        myText.text = "Money: " + Inventory.Money.ToString();
 
         if (rb != null && rb.velocity.magnitude < 0.01f && !CanMove)
         {
@@ -116,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
             Vector2 moveforce = velocityReq * acceleration; //calculate the force needed to reach the target velocity considering acceleration
 
-            rb.AddForce(moveforce * Time.fixedDeltaTime, ForceMode2D.Force); //applyes the movement to the rb
+            rb.AddForce(moveforce * Time.deltaTime, ForceMode2D.Force); //applyes the movement to the rb
 
             acceleration = maxSpeed + 325 / 0.9f;
         }
@@ -153,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
 
             Vector2 moveforce = velocityReq * acceleration; //calculate the force needed to reach the target velocity considering acceleration
 
-            rb.AddForce(moveforce * Time.fixedDeltaTime, ForceMode2D.Force); //applyes the movement to the rb
+            rb.AddForce(moveforce * Time.deltaTime, ForceMode2D.Force); //applyes the movement to the rb
 
             acceleration = maxSpeed + 325 / 0.9f;
 
@@ -214,9 +225,28 @@ public class PlayerMovement : MonoBehaviour
                 item.Play();
             }
             yield return new WaitForSeconds(1f);
-            breathingsorurce.pitch += Random.RandomRange(-0.25f, 0.25f);
+            breathingsorurce.pitch = 1 + Random.RandomRange(-0.25f, 0.25f);
             breathingsorurce.Play();
-            breathingsorurce.pitch = 1;
         }
+    }
+
+    void SwitchInventory()
+    {
+        if (isInventoryOpen)
+        {
+            inventoryPanel.SetActive(false);
+            isInventoryOpen = false;
+        }
+        else
+        {
+            inventoryPanel.SetActive(true);
+            isInventoryOpen = true;
+        }
+    }
+
+    public void CLouseInventory()
+    {
+        inventoryPanel.SetActive(false);
+        isInventoryOpen = false;
     }
 }

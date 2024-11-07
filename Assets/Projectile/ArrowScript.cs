@@ -25,15 +25,18 @@ public class ArrowScript : MonoBehaviour
     void Start()
     {
         WindFxSpriterenderer = WindFx.GetComponent<SpriteRenderer>();
-
-        //mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rb = GetComponent<Rigidbody2D>();
-        //mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        //direction = mousePos - transform.position;
-        //Vector3 rotation = transform.position - mousePos;
-        //float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(0, 0, rot + 90);
         DestroyArrow(5f);
+    }
+
+    private void Awake()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            damange = playerObject.GetComponent<PlayerMovement>().Uppgrademanager.DamageUpgradeAmount + 1; 
+        }
     }
 
     private void Update()

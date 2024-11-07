@@ -91,7 +91,7 @@ public class ActivateTurret : MonoBehaviour
         while (timer < duration)
         {
             interactDisplay.transform.localScale = Vector3.Lerp(originalScale, targetScale, timer / duration);
-            timer += Time.fixedDeltaTime;
+            timer += Time.deltaTime;
             yield return null;
         }
 
@@ -102,7 +102,7 @@ public class ActivateTurret : MonoBehaviour
         while (timer < duration)
         {
             interactDisplay.transform.localScale = Vector3.Lerp(targetScale, originalScale, timer / duration);
-            timer += Time.fixedDeltaTime;
+            timer += Time.deltaTime;
             yield return null;
         }
 
@@ -119,7 +119,7 @@ public class ActivateTurret : MonoBehaviour
         {
             SubForeground.color = Color.Lerp(SubForeground.color, color, time / duration);
 
-            time += Time.fixedDeltaTime;
+            time += Time.deltaTime;
             yield return null;
         }
 

@@ -34,7 +34,7 @@ public class Pickup : MonoBehaviour
 
         if (cooldown > -1)
         {
-            cooldown -= Time.fixedDeltaTime;
+            cooldown -= Time.deltaTime;
         }
     }
 

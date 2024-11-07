@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2544856317894544701}
   - component: {fileID: 2522307475889792436}
   - component: {fileID: 6549698090114172330}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4841,7 +4841,7 @@ GameObject:
   - component: {fileID: 4977935066737962357}
   - component: {fileID: 6577709723978056763}
   - component: {fileID: 2129114677132954274}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DmgSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9671,7 +9671,7 @@ GameObject:
   - component: {fileID: 5699047508898974121}
   - component: {fileID: 2936368670279232568}
   - component: {fileID: 2258338305296922359}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14505,7 +14505,7 @@ GameObject:
   - component: {fileID: 6748746906686654484}
   - component: {fileID: 3553212420692840834}
   - component: {fileID: 3215013645534746895}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14718,7 +14718,10 @@ MonoBehaviour:
   originalDeathMat: {fileID: 2100000, guid: 0b07c058184a1a34a9be4409b509dcba, type: 2}
   dmgSystem: {fileID: 6577709723978056763}
   invincibilityTimer: 0.25
+  CurrentInvincibilityTimer: 0
   ActivatingDeathParticles:
   - {fileID: 2522307475889792436}
   - {fileID: 2936368670279232568}
   isDead: 0
+  wavespawner: {fileID: 0}
+  Damage: 1
