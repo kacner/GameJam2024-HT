@@ -4,11 +4,11 @@ using UnityEngine;
 public class UppgradeManager : MonoBehaviour
 {
     public int MaxUppgradeAmount = 9; 
-    public int Money = 0;
+    public int Money = 100;
 
     [Space(40)]
 
-    [SerializeField] public int HealingUpgradeAmount = 0;
+    [SerializeField] private int HealingUpgradeAmount = 0;
 
     [SerializeField] private int HealingWantToBuyint = 0;
 
@@ -29,7 +29,7 @@ public class UppgradeManager : MonoBehaviour
 
     [Space(40)]
 
-    [SerializeField] public int QuickUpgradeAmount = 0;
+    [SerializeField] private int QuickUpgradeAmount = 0;
 
     [SerializeField] private int QuickWantToBuyint = 0;
 
@@ -39,7 +39,7 @@ public class UppgradeManager : MonoBehaviour
 
     [Space(40)]
 
-    [SerializeField] public int WalkUpgradeAmount = 0;
+    [SerializeField] private int WalkUpgradeAmount = 0;
 
     [SerializeField] private int WalkWantToBuyint = 0;
 
@@ -49,7 +49,7 @@ public class UppgradeManager : MonoBehaviour
 
     [Space(40)]
 
-    [SerializeField] public int MineUpgradeAmount = 0;
+    [SerializeField] private int MineUpgradeAmount = 0;
 
     [SerializeField] private int MineWantToBuyint = 0;
 
@@ -61,7 +61,6 @@ public class UppgradeManager : MonoBehaviour
 
     private int FinalCost = 0;
     public TextMeshProUGUI FinalCostText;
-    public SubHP subhp;
 
 
     private void Start()
@@ -126,6 +125,14 @@ public class UppgradeManager : MonoBehaviour
 
         FinalCostText.text = "£" + FinalCost.ToString();
 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            UpdateCost();
+        }
     }
 
     public void AddHealing()
@@ -228,14 +235,10 @@ public class UppgradeManager : MonoBehaviour
 
     public void Conform()
     {
-
         if (FinalCost <= Money)
         {
             HealingUpgradeAmount = HealingWantToBuyint + HealingUpgradeAmount;
             HealingUpgradeAmount = Mathf.Clamp(HealingUpgradeAmount, 0, MaxUppgradeAmount);
-
-            subhp.CurrentHP += 5f;
-            subhp.updateHealthBar();
             
             
             DamageUpgradeAmount = DamageWantToBuyint + DamageUpgradeAmount;

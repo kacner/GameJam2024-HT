@@ -27,22 +27,13 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] public List<GameObject> allSpawnedEnemyes;
 
     public TextMeshProUGUI EnemyesLeft;
-    public GameObject EnemyesLeftGameobject;
-    public TextMeshProUGUI TimeTillNextRound;
-    public float TimeTillNextRoundfloat;
     // Update is called once per frame
-
-    private void Start()
-    {
-        StartCoroutine(StartWaveSpawning());
-    }
     void Update()
     {
-        TimeTillNextRoundfloat -= Time.deltaTime;
-        TimeTillNextRoundfloat = Mathf.Clamp(TimeTillNextRoundfloat, 0, TimeBetweenWaves);
-
-        TimeTillNextRound.text = "Next Round In: " + Mathf.Round(TimeTillNextRoundfloat).ToString();
-
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(StartWaveSpawning());
+        }
 
         if (allSpawnedEnemyes.Count == 0)
             IsWaveActive = false;
@@ -50,13 +41,11 @@ public class WaveSpawner : MonoBehaviour
         if (IsWaveActive)
         {
             EnemyesLeft.enabled = true;
-            EnemyesLeftGameobject.SetActive(true);
             EnemyesLeft.text = "Enemies left: " + allSpawnedEnemyes.Count.ToString();
         }
         else
         {
             EnemyesLeft.enabled = false;
-            EnemyesLeftGameobject.SetActive(false);
         }
     }
 
@@ -69,13 +58,11 @@ public class WaveSpawner : MonoBehaviour
                 yield return null;
             }
 
-            IsWaveOnCooldown = true;
-            TimeTillNextRoundfloat = TimeBetweenWaves;
-            yield return new WaitForSeconds(TimeBetweenWaves);
             StartCoroutine(spawnWave());
+            IsWaveOnCooldown = true;
+            yield return new WaitForSeconds(TimeBetweenWaves);
             IsWaveOnCooldown = false;
             waveIntensity++;
-            TimeBetweenSpawns += 2;
 
         }
     }

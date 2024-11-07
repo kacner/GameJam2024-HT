@@ -1,21 +1,15 @@
-using System.Data;
 using UnityEngine;
 
 public class DoorOpener : MonoBehaviour
 {
     [SerializeField] private bool colliding1 = false;
     public SpriteRenderer spriterenderer;
-    [SerializeField] private Sprite DoorOpen1;
-    [SerializeField] private Sprite DoorClouse1;
-    [SerializeField] private Sprite DoorOpen2;
-    [SerializeField] private Sprite DoorClouse2;
-    [SerializeField] private Sprite DoorOpen3;
-    [SerializeField] private Sprite DoorClouse3;
-    public SubHP subhp;
+    [SerializeField] private Sprite DoorOpen;
+    private Sprite DoorClouse;
 
     private void Start()
     {
-        updatesprite();
+        DoorClouse = spriterenderer.sprite;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -33,46 +27,13 @@ public class DoorOpener : MonoBehaviour
     }
     private void Update()
     {
-        updatesprite();
-    }
-
-    void updatesprite()
-    {
-        if (subhp.DmgState == 2)
+        if (colliding1)
         {
-
-            if (colliding1)
-            {
-                spriterenderer.sprite = DoorOpen2;
-            }
-            else
-            {
-                spriterenderer.sprite = DoorClouse2;
-            }
+            spriterenderer.sprite = DoorOpen;
         }
-        else if (subhp.DmgState == 1)
+        else
         {
-
-            if (colliding1)
-            {
-                spriterenderer.sprite = DoorOpen1;
-            }
-            else
-            {
-                spriterenderer.sprite = DoorClouse1;
-            }
-        }
-        else if (subhp.DmgState == 3)
-        {
-
-            if (colliding1)
-            {
-                spriterenderer.sprite = DoorOpen3;
-            }
-            else
-            {
-                spriterenderer.sprite = DoorClouse3;
-            }
+            spriterenderer.sprite = DoorClouse;
         }
     }
 }

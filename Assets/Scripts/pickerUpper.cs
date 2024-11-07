@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class pickerUpper : MonoBehaviour
 {
-    public UppgradeManager Upgrademanager;
+    public inventory Playerinventory;
     public Color color;
     public ParticleSystem[] partisstclesys;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Pickup")
         {
+            CalculateMoney(collision.gameObject);
             StartCoroutine(Thing(collision.gameObject));
             collision.GetComponent<Pickup>().Dettach();
             collision.GetComponent<SpriteRenderer>().sortingOrder = 12;
@@ -18,13 +19,10 @@ public class pickerUpper : MonoBehaviour
 
     IEnumerator Thing(GameObject item)
     {
-        StartCoroutine(Wait(item));
-
         item.GetComponent<CircleCollider2D>().enabled = false;
         float time = 0;
         float duration = 2f;
         SpriteRenderer sprieenderer = item.GetComponent<SpriteRenderer>();
-        
 
         while (time < duration)
         {
@@ -43,7 +41,6 @@ public class pickerUpper : MonoBehaviour
         Destroy(item.gameObject);
 
         StartParticle();
-
     }
 
     void StartParticle()
@@ -56,15 +53,6 @@ public class pickerUpper : MonoBehaviour
 
     void CalculateMoney(GameObject thing)
     {
-        if (thing.GetComponent<Pickup>().Type == "Clam")
-            Upgrademanager.Money += 5;
-        else if (thing.GetComponent<Pickup>().Type == "Coral")
-            Upgrademanager.Money += 10;
-    }
-
-    IEnumerator Wait(GameObject item)
-    {
-        yield return new WaitForSeconds(1f);
-        CalculateMoney(item);
+        Playerinventory.Money += 5;
     }
 }

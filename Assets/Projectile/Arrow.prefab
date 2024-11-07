@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4951496118044834782}
   - component: {fileID: 4824161652654457763}
   - component: {fileID: 6660490257808999485}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 5849189237739439913}
   - component: {fileID: 4337309389818235185}
   - component: {fileID: 5187946153585416275}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 4597451332599988406}
   - component: {fileID: 8622552592269504269}
   - component: {fileID: 3110928701293103496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 6414194847147881333}
   - component: {fileID: 7321629935685168525}
   - component: {fileID: 4810973633053436017}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 5482442009025773700}
   - component: {fileID: 4723692234786584054}
   - component: {fileID: 1302616126239755665}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,7 +803,7 @@ GameObject:
   - component: {fileID: 1784994211350467376}
   - component: {fileID: 1367551744851197182}
   - component: {fileID: 5707708797163091436}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -959,7 +959,7 @@ GameObject:
   - component: {fileID: 4572406722356791534}
   - component: {fileID: 7688845606988695387}
   - component: {fileID: 1734961039641097541}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5773,7 +5773,7 @@ GameObject:
   - component: {fileID: 6233198332216115882}
   - component: {fileID: 3985917655294682287}
   - component: {fileID: 7762685206979481374}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5928,7 +5928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7494691162724940992}
   - component: {fileID: 6038895558800289595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WindFx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6015,7 +6015,7 @@ GameObject:
   - component: {fileID: 6712512020232289456}
   - component: {fileID: 3309167364625308187}
   - component: {fileID: 1592569536569525825}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6173,7 +6173,7 @@ GameObject:
   - component: {fileID: 1765325480949595957}
   - component: {fileID: 7809849357708032937}
   - component: {fileID: 1823110974462130547}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,7 +16,7 @@ public class BoatControll : MonoBehaviour
     public bool isActive = false;
     public ParticleSystem gunparticle;
     public float holdtimer = 0;
-   [SerializeField] private float bowHoldTime = 1f;
+    private float bowHoldTime = 1.5f;
     public cameraScript CameraScript;
     public SpriteRenderer harpoon;
     public SpriteRenderer harpoonSprite;
@@ -27,8 +27,6 @@ public class BoatControll : MonoBehaviour
     public GameObject AudioSorceHaver;
 
     private AudioSource[] HarpoonShoot;
-
-    public UppgradeManager uppgranddemanager;
     private void Start()
     {
         harpoon.enabled = false;
@@ -41,11 +39,6 @@ public class BoatControll : MonoBehaviour
 
     void Update()
     {
-        bowHoldTime = 1 - (uppgranddemanager.QuickUpgradeAmount * 0.05f) + 0.05f;
-
-        animator.SetFloat("Multiplier", 2 - bowHoldTime);
-
-
         if (isActive)
         {
             if (CurrentCooldown > 0)
@@ -55,6 +48,7 @@ public class BoatControll : MonoBehaviour
 
             AimTurret();
             
+            print(CurrentCooldown);
 
             if (Input.GetKey(KeyCode.Mouse1)) // Shooting starts
             {
@@ -66,7 +60,7 @@ public class BoatControll : MonoBehaviour
             }
             else // Mouse1 button is not held
             {
-                if (holdtimer > (bowHoldTime - 0.05f))
+                if (holdtimer > (bowHoldTime - 0.2f))
                 {
                     shoot();
                     

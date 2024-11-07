@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector2 moveDirection;
     [HideInInspector] private Animator animator;
     [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] private SpriteRenderer spriterenderer;
     
     [Space(10)]
 
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 startPosition;
     private Vector2 direction;
     public LayerMask targetLayerMask;
+    public inventory Inventory;
 
     private GameObject[] allItems;
     public TextMeshProUGUI myText;
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        spriterenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         StartCoroutine(Breathing());
@@ -92,6 +95,9 @@ public class PlayerMovement : MonoBehaviour
         else
             runningParticleSystem.enableEmission = false;
 
+        if (Input.GetKey(KeyCode.N))
+            Debug.Break();
+
         Mine();
 
         if (Input.GetKeyDown(KeyCode.Backspace))
@@ -107,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        myText.text = "Money: £" + Uppgrademanager.Money.ToString();
+        myText.text = "Money: " + Inventory.Money.ToString();
 
         if (rb != null && rb.velocity.magnitude < 0.01f && !CanMove)
         {
@@ -199,6 +205,15 @@ public class PlayerMovement : MonoBehaviour
 
         
     }
+    void OnDrawGizmos()
+    {
+        if (direction != Vector2.zero)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(startPosition, startPosition + direction * rayLength);
+        }
+    }
+
 
     IEnumerator Breathing()
     {

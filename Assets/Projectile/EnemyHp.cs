@@ -60,7 +60,7 @@ public class EnemyHp : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CurrentInvincibilityTimer -= Time.deltaTime; //subtrakts
+        CurrentInvincibilityTimer -= Time.fixedDeltaTime; //subtrakts
 
         CurrentInvincibilityTimer = Mathf.Clamp(CurrentInvincibilityTimer, 0, invincibilityTimer);
     }
