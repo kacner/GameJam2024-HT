@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +5,8 @@ public class SubHP : MonoBehaviour
 {
     public Image Slider;
     [SerializeField] private float HP = 20;
-    [SerializeField] private float CurrentHP = 5;
+    [SerializeField] public float CurrentHP = 5;
+    public float DmgState = 2;
     // Update is called once per frame
 
     private void Start()
@@ -34,7 +33,19 @@ public class SubHP : MonoBehaviour
             Slider.fillAmount = 0;
             die();
         }
-    }
+
+        if (CurrentHP >= HP)
+        {
+            print("youwin");
+        }
+
+        if (CurrentHP < 6)
+            DmgState = 3;
+        else if (CurrentHP < 13)
+            DmgState = 2;
+        else
+            DmgState = 1;
+    }       
 
     void die()
     {
@@ -43,13 +54,10 @@ public class SubHP : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            updateHealthBar();
-        }
+        CurrentHP = Mathf.Clamp(CurrentHP, -1, HP);
     }
 
-    void updateHealthBar()
+    public void updateHealthBar()
     {
         TakeDamage(0);
     }

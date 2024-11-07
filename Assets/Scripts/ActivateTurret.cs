@@ -10,13 +10,11 @@ public class ActivateTurret : MonoBehaviour
     public cameraScript CameraScript;
     public GameObject interactDisplay;
     [SerializeField] private Color color;
-    private Color startColor;
     [SerializeField] private SpriteRenderer SubBackground;
     [SerializeField] private SpriteRenderer SubForeground;
     private void Start()
     {
         interactDisplay.SetActive(false);
-        startColor = SubForeground.color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

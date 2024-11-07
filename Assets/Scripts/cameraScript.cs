@@ -64,7 +64,7 @@ public class cameraScript : MonoBehaviour
         while (time < duration)
         {
             transform.position = Vector3.Lerp(transform.position, MoveToTransform.position, time / duration);
-            time += Time.fixedDeltaTime;
+            time += Time.deltaTime;
             yield return null;
         }
 
@@ -110,7 +110,7 @@ public class cameraScript : MonoBehaviour
         {
             PlayerLight.intensity = Mathf.Lerp(PlayerLight.intensity, intensity, timer / duration);
 
-            timer += Time.fixedDeltaTime;
+            timer += Time.deltaTime;
             yield return null;
         }
 

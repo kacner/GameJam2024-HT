@@ -6,9 +6,9 @@ public class Pickup : MonoBehaviour
     private GameObject player;
     private bool isAttached = false;
     private DistanceJoint2D distanceJoint;
-    private WheelJoint2D wheelJoint;
     private LineRenderer linerenderer;
     private float cooldown = -0.1f;
+    public string Type;
     void Start()
     {
         linerenderer = GetComponent<LineRenderer>();
