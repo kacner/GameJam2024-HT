@@ -11,6 +11,8 @@ TagManager:
   - ShouldFollow
   - Pickup
   - Block
+  - Obstical
+  - EnemyWaypoint
   layers:
   - Default
   - TransparentFX

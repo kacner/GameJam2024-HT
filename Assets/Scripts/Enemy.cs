@@ -1,5 +1,7 @@
-using System;
+using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+
 
 
 public class Enemy : MonoBehaviour
@@ -13,20 +15,35 @@ public class Enemy : MonoBehaviour
     public float shootingcooldown = 1f;
     public float cooldownTimer = 0f;
     public float distanceToStop;
-    public float accelerationTime = 2f;
-    public float maxSpeed = 5f;
+    public float accelerationTime = 5f;
+    public float maxSpeed = 20f;
     private Vector2 movement;
     private float timeLeft;
+    private float ChangeDirectionCD;
+
+    [SerializeField] GameObject WaypointGroup;
+    Transform[] waypoints;
+    int currentIndex = 0;
+    float wayPointTimer = 0;
 
     private Camera mainCamera;
     private float distance;
     public Rigidbody2D rb;
+    //public Transform boundary;
+
+    [SerializeField] private float ScreenBarrier;
     // Start is called before the first frame update
     private void Start()
     {
-        float randomDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1f : 1f;
-        movement = new Vector2(randomDirection, 0).normalized;
+        float randomDirection = UnityEngine.Random.Range(0, 2) == 0 ? -5f : 5f;
+        //movement = new Vector2(randomDirection, 0).normalized;
         rb = GetComponent<Rigidbody2D>();
+        movement = transform.up;
+        mainCamera = Camera.main;
+        Wall = GameObject.Find("Target");
+        Player = FindObjectOfType<PlayerMovement>().transform;
+        WaypointGroup = GameObject.FindGameObjectWithTag("EnemyWaypoint");
+        waypoints = WaypointGroup.GetComponentsInChildren<Transform>();
     }
 
     // Update is called once per frame
@@ -34,12 +51,21 @@ public class Enemy : MonoBehaviour
     {
         ShootAtPlayer();
         AimAtPlayer();
+        //KeepWithinCameraBounds();
+       
 
-        if (timeLeft <= 0)
+        /*if ((movement.x > 0 && transform.position.y >= boundary.position.y) ||
+        (movement.x < 0 && transform.position.y <= boundary.position.y))
         {
-            ChangeDirection();
+            Debug.Log("Boundary reached, reversing direction!");
+            movement = -movement; // Reverse direction
+            ChangeDirectionCD = 0.5f; // Optional short cooldown
+        }*/
+        /*if (timeLeft <= 0)
+        {
+            //ChangeDirection();
             timeLeft = accelerationTime;
-        }
+        }*/
         distance = Vector2.Distance(transform.position, Wall.transform.position);
         Vector2 direction = (Wall.transform.position - transform.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -54,10 +80,13 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            RandomWayPointMovemment();
+            //ChangeDirection();
+
             //rb.velocity = Vector2.zero;
             //Debug.Log("stop");
 
-            timeLeft -= Time.deltaTime;
+            /*timeLeft -= Time.deltaTime;
             if (timeLeft <= 0)
             {
                 float randomDirection = UnityEngine.Random.Range(-5f, 5f) >= 0 ? 5f : -5f;
@@ -69,43 +98,69 @@ public class Enemy : MonoBehaviour
                 timeLeft = accelerationTime;
             }
 
-            transform.Translate(movement * maxSpeed * Time.deltaTime);
+            transform.Translate(movement * maxSpeed * Time.deltaTime);*/
         }
 
-        KeepWithinCameraBounds();
-        
+        //KeepWithinCameraBounds();
+
+    }
+
+    private void RandomWayPointMovemment()
+    {
+        wayPointTimer += Time.deltaTime;
+        if (wayPointTimer > 5)
+        {
+            currentIndex = Random.Range(0, waypoints.Length);
+            wayPointTimer = 0;
+        }   
+        transform.position += (waypoints[currentIndex].position - transform.position).normalized * speed * Time.deltaTime;
     }
 
     void ChangeDirection()
     {
-        float randomX = UnityEngine.Random.Range(-1f, 1f);
-        float randomY = UnityEngine.Random.Range(-1f, 1f);
+        ChangeDirectionCD -= Time.deltaTime;
 
-        movement = new Vector2(randomX, randomY).normalized;
+        if (ChangeDirectionCD <= 0)
+        {
+            Debug.Log("rotera!");
+            float angleChange = Random.Range(-90f, 90f);
+            Debug.Log(angleChange);
+            Quaternion rotation = Quaternion.AngleAxis(angleChange, transform.forward);
+            Debug.Log("ratation" + rotation);
+            movement = rotation * movement;
+            Debug.Log("movement" + movement);
+            ChangeDirectionCD = Random.Range(5f, 10f);
+
+
+        }
+
+        transform.position += (Vector3)movement * speed * Time.deltaTime;
+        //float randomX = UnityEngine.Random.Range(-1f, 1f);
+        //float randomY = UnityEngine.Random.Range(-1f, 1f);
+
+        //movement = new Vector2(randomX, randomY).normalized;
     }
+
+
 
     void KeepWithinCameraBounds()
     {
-        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(transform.position);
+        Vector2 screenPosition = mainCamera.WorldToScreenPoint(transform.position);
 
-        if (viewportPosition.x <= 0.05f || viewportPosition.x >= 0.95f)
+        if ((screenPosition.x < ScreenBarrier && movement.x < 0) || (screenPosition.x > mainCamera.pixelWidth - ScreenBarrier && movement.x > 0))
         {
-            movement.x = -movement.x;
-            viewportPosition.x = Mathf.Clamp(viewportPosition.x, 0.05f, 0.95f);
+            movement = new Vector2(-movement.x, movement.y);
         }
 
-        if (viewportPosition.y <= 0.05f || viewportPosition.y >= 0.95f)
+        if ((screenPosition.y < ScreenBarrier && movement.y < 0) || (screenPosition.y > mainCamera.pixelWidth - ScreenBarrier && movement.y > 0))
         {
-            movement.y = -movement.y;
-            viewportPosition.y = Mathf.Clamp(viewportPosition.y, 0.05f, 0.95f);
+            movement = new Vector2(movement.x, -movement.y);
         }
-
-        transform.position = mainCamera.ViewportToWorldPoint(viewportPosition);
 
     }
     void AimAtPlayer()
     {
-        Vector3 direction = (Player.position - transform.position).normalized;
+        Vector3 direction = (Wall.transform.position - transform.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0, 0, angle);
