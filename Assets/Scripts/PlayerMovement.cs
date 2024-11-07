@@ -49,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
 
     public UppgradeManager Uppgrademanager;
 
+    public GameObject OPENINVTEXT;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -226,6 +228,7 @@ public class PlayerMovement : MonoBehaviour
         {
             inventoryPanel.SetActive(true);
             isInventoryOpen = true;
+            Destroy(OPENINVTEXT);
         }
     }
 
